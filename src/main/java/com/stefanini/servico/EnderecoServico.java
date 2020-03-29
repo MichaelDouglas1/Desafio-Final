@@ -5,8 +5,15 @@ import com.stefanini.model.Endereco;
 
 import javax.ejb.*;
 import javax.inject.Inject;
+import javax.json.JsonException;
 import javax.validation.Valid;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,4 +58,20 @@ public class EnderecoServico implements Serializable {
 	public Optional<Endereco> encontrar(Long id) {
 		return dao.encontrar(id);
 	}
+	
+	public String buscarCep(String cep) throws IOException {
+        URL urlReq = new URL("https://viacep.com.br/ws/" + cep + "/json/");
+        HttpURLConnection con = (HttpURLConnection) urlReq.openConnection();
+        con.setRequestMethod("GET");
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        con.disconnect();
+        return response.toString();
+    }
 }

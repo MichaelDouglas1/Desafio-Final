@@ -5,9 +5,12 @@ import com.stefanini.model.Endereco;
 import com.stefanini.servico.EnderecoServico;
 
 import javax.inject.Inject;
+import javax.json.JsonException;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -25,6 +28,7 @@ public class EnderecoResource {
      */
     @Inject
     private EnderecoServico enderecoServico;
+    
     /**
      *
      */
@@ -44,6 +48,7 @@ public class EnderecoResource {
         Optional<List<Endereco>> listPessoa = enderecoServico.getList();
         return listPessoa.map(enderecos -> Response.ok(enderecos).build()).orElseGet(() -> Response.status(Response.Status.NOT_FOUND).build());
     }
+    
 
     /**
      *
@@ -93,6 +98,13 @@ public class EnderecoResource {
     @Path("{id}")
     public Response obterEndereco(@PathParam("id") Long id) {
         return enderecoServico.encontrar(id).map(endereco -> Response.ok(endereco).build()).orElseGet(() -> Response.status(Response.Status.NOT_FOUND).build());
+    }
+    
+
+    @GET
+    @Path("cep/{cep}")
+    public Response obterEnderecoPorCep(@PathParam("cep") String cep) throws IOException {
+        return Response.ok(enderecoServico.buscarCep(cep)).build();
     }
 
 }
