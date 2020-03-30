@@ -106,5 +106,11 @@ public class PessoaResource {
 	public Response obterPessoa(@PathParam("id") Long id) {
 		return pessoaServico.encontrar(id).map(pessoas -> Response.ok(pessoas).build()).orElseGet(() -> Response.status(Status.NOT_FOUND).build());
 	}
+	
+	@GET
+	@Path("tudo")
+	public Response obterTudoPessoa() {
+		return Response.ok(pessoaServico.buscarGeral()).build();
+	}
 
 }

@@ -10,7 +10,6 @@ import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * 
@@ -93,5 +92,10 @@ public class PessoaServico implements Serializable {
 	public Optional<Pessoa> encontrar(Long id) {
 		return dao.encontrar(id);
 	}
+	
+	
 
+	public List<Pessoa> buscarGeral() {
+		return dao.buscaCompleta();
+	}
 }
