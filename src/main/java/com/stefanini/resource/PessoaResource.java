@@ -1,7 +1,6 @@
 package com.stefanini.resource;
 
 import com.stefanini.dto.ErroDto;
-import com.stefanini.dto.SucessoDto;
 import com.stefanini.exception.NegocioException;
 import com.stefanini.model.Pessoa;
 import com.stefanini.servico.PessoaServico;
@@ -111,6 +110,13 @@ public class PessoaResource {
 	@Path("tudo")
 	public Response obterTudoPessoa() {
 		return Response.ok(pessoaServico.buscarGeral()).build();
+	}
+	
+	@GET
+	@Path("Paginado")
+	public Response paginado(@QueryParam("pageNo") Integer pageNo,
+								@QueryParam("pageSize") Integer pageSize){
+		return Response.ok(pessoaServico.listarPaginador(pageNo, pageSize)).build();
 	}
 
 }

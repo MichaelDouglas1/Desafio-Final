@@ -8,6 +8,7 @@ import javax.ejb.*;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,9 +94,21 @@ public class PessoaServico implements Serializable {
 		return dao.encontrar(id);
 	}
 	
-	
-
+	/**
+	 * Buscando a pessoa com endereço e perfil por somene uma Query
+	 * */
 	public List<Pessoa> buscarGeral() {
 		return dao.buscaCompleta();
+	}
+	
+	/**
+	 * Paginando a lista de pessoas por Paginador
+	 * */
+	public List<Pessoa> listarPaginador(Integer pageNo, Integer pageSize){
+		ArrayList<Pessoa> list = new ArrayList<Pessoa>(dao.buscaCompleta());
+		if (pageNo + pageSize > list.size()) return new ArrayList<Pessoa>();
+		
+		return list.subList(pageNo, pageNo + pageSize);
+		
 	}
 }

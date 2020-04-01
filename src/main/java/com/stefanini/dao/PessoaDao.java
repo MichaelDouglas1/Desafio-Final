@@ -34,7 +34,7 @@ public class PessoaDao extends GenericDao<Pessoa, Long> {
 	public List<Pessoa> buscaCompleta(){
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("SELECT p FROM Pessoa p ");
+		sql.append("SELECT DISTINCT p FROM Pessoa p ");
 		sql.append(" LEFT JOIN FETCH p.enderecos enderecos ");
 		sql.append(" LEFT JOIN FETCH p.perfils perfils ");
 		sql.append(" ORDER BY p.nome");
