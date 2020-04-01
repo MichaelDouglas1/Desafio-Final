@@ -19,6 +19,7 @@ public class PessoaDto implements Serializable {
 	private String email;
 	private LocalDate dataNascimento;
 	private Boolean situacao;
+	private String imagem;
 	private Set<Endereco> enderecos = new HashSet<>();
 	private Set<Perfil> perfils = new HashSet<>();
 
@@ -76,5 +77,13 @@ public class PessoaDto implements Serializable {
 
 	public void setPerfils(Set<Perfil> perfils) {
 		this.perfils = perfils;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 }

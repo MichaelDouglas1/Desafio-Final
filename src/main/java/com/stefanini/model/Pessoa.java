@@ -71,6 +71,10 @@ public class Pessoa implements Serializable{
 	@Column(name = "ST_PESSOA")
 	private Boolean situacao;
 
+	@NotNull
+	@Column(name ="DS_CAMINHO_IMAGEM")
+	private String imagem;
+	
 	/**
 	 * Mapeamento de Enderecos Unidirecional
 	 */
@@ -111,12 +115,15 @@ public class Pessoa implements Serializable{
 	 * @param dataNascimento
 	 * @param situacao
 	 */
-	public Pessoa(@NotNull String nome, @NotNull String email, @NotNull LocalDate dataNascimento,@NotNull Boolean situacao) {
+	//agora o da imagem tambem
+	
+	public Pessoa(@NotNull String nome, @NotNull String email, @NotNull LocalDate dataNascimento,@NotNull Boolean situacao, @NotNull String imagem) {
 		super();
 		this.nome = nome;
 		this.email = email;
 		this.dataNascimento = dataNascimento;
 		this.situacao = situacao;
+		this.imagem = imagem;
 	}
 
 
@@ -170,6 +177,16 @@ public class Pessoa implements Serializable{
 	public void setSituacao(Boolean situacao) {
 		this.situacao = situacao;
 	}
+	
+	public String getImagem() {
+		return imagem;
+	}
+
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -199,7 +216,7 @@ public class Pessoa implements Serializable{
 	@Override
 	public String toString() {
 		return "Pessoa [id=" + id + ", nome=" + nome + ", email=" + email + ", dataNascimento=" + dataNascimento
-				+ ", situacao=" + situacao + "]";
+				+ ", situacao=" + situacao + ", imagem="+ imagem + "]";
 	}
 	
 	

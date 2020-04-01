@@ -60,11 +60,13 @@ public class EnderecoServico implements Serializable {
 	}
 	
 	public String buscarCep(String cep) throws IOException {
+		
+		
         URL urlReq = new URL("https://viacep.com.br/ws/" + cep + "/json/");
         HttpURLConnection con = (HttpURLConnection) urlReq.openConnection();
         con.setRequestMethod("GET");
         BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+                new InputStreamReader(con.getInputStream(),  "UTF-8"));
         String inputLine;
         StringBuilder response = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
