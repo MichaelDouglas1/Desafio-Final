@@ -15,15 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author joaopedromilhome
@@ -110,20 +104,22 @@ public class Pessoa implements Serializable{
 
 	/**
 	 * Construtor da Classe, Obrigando receber todos os parametros
+	 * 
 	 * @param nome
 	 * @param email
 	 * @param dataNascimento
 	 * @param situacao
 	 */
-	//agora o da imagem tambem
-	
-	public Pessoa(@NotNull String nome, @NotNull String email, @NotNull LocalDate dataNascimento,@NotNull Boolean situacao, @NotNull String imagem) {
+	public Pessoa(Long id, @NotNull String nome, @NotNull String email, @NotNull LocalDate dataNascimento,
+			@NotNull Boolean situacao, Set<Endereco> enderecos, Set<Perfil> perfils) {
 		super();
+		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.dataNascimento = dataNascimento;
 		this.situacao = situacao;
-		this.imagem = imagem;
+		this.enderecos = enderecos;
+		this.perfils = perfils;
 	}
 
 
@@ -159,8 +155,6 @@ public class Pessoa implements Serializable{
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-
-
 
 	public String getEmail() {
 		return email;
@@ -216,7 +210,7 @@ public class Pessoa implements Serializable{
 	@Override
 	public String toString() {
 		return "Pessoa [id=" + id + ", nome=" + nome + ", email=" + email + ", dataNascimento=" + dataNascimento
-				+ ", situacao=" + situacao + ", imagem="+ imagem + "]";
+				+ ", situacao=" + situacao + "]";
 	}
 	
 	

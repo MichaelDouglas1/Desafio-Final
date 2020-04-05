@@ -1,6 +1,7 @@
 package com.stefanini.resource;
 
 import com.stefanini.dto.ErroDto;
+import com.stefanini.dto.PessoaDto;
 import com.stefanini.exception.NegocioException;
 import com.stefanini.model.Pessoa;
 import com.stefanini.servico.PessoaServico;
@@ -51,13 +52,18 @@ public class PessoaResource {
 	 * @param pessoa
 	 * @return
 	 */
-	@POST
-	public Response adicionarPessoa(@Valid Pessoa pessoa) {
-		if(pessoaServico.validarPessoa(pessoa)){
-			return Response.ok(pessoaServico.salvar(pessoa)).build();
-		}
-		return Response.status(Status.METHOD_NOT_ALLOWED).entity(new ErroDto("email","email já existe", pessoa.getEmail())).build();
-	}
+	 @POST
+	    public Response adicionarPessoa(@Valid PessoaDto dto) {
+	        Pessoa pessoa = pessoaServico.toPessoa(dto);
+	        if(dto.getImagem() != null && dto.getImagem().getNome() != null && dto.getImagem().getBase64() != null)
+	            pessoa.setImagem(pessoaServico.saveImage(dto.getImagem().getNome(), dto.getImagem().getBase64()));
+
+	        if(pessoaServico.validarPessoa(pessoa)){
+				return Response.ok(pessoaServico.salvar(pessoa)).build();
+			}
+	        return Response.status(Status.METHOD_NOT_ALLOWED)
+	                .entity(new ErroDto("email", "email já existe", pessoa.getEmail())).build();
+	    }
 
 
 	/**
@@ -66,7 +72,12 @@ public class PessoaResource {
 	 * @return
 	 */
 	@PUT
-	public Response atualizarPessoa(@Valid Pessoa pessoa) {
+	public Response atualizarPessoa(@Valid PessoaDto dto) {
+		Pessoa pessoa = pessoaServico.toPessoa(dto);
+		
+		if(dto.getImagem() != null && dto.getImagem().getNome() != null && dto.getImagem().getBase64() != null)
+			pessoa.setImagem(pessoaServico.saveImage(dto.getImagem().getNome(), dto.getImagem().getBase64()));
+		
 		if(pessoaServico.validarPessoa(pessoa)){
 			return Response.ok(pessoaServico.atualizar(pessoa)).build();
 		}
@@ -107,13 +118,13 @@ public class PessoaResource {
 	}
 	
 	@GET
-	@Path("tudo")
+	@Path("ordenado")
 	public Response obterTudoPessoa() {
 		return Response.ok(pessoaServico.buscarGeral()).build();
 	}
 	
 	@GET
-	@Path("Paginado")
+	@Path("paginado")
 	public Response paginado(@QueryParam("pageNo") Integer pageNo,
 								@QueryParam("pageSize") Integer pageSize){
 		return Response.ok(pessoaServico.listarPaginador(pageNo, pageSize)).build();

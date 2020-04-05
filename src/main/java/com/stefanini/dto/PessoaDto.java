@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.stefanini.model.Endereco;
+import com.stefanini.model.Imagem;
 import com.stefanini.model.Perfil;
 
 public class PessoaDto implements Serializable {
@@ -19,9 +20,25 @@ public class PessoaDto implements Serializable {
 	private String email;
 	private LocalDate dataNascimento;
 	private Boolean situacao;
-	private String imagem;
+	private Imagem imagem;
 	private Set<Endereco> enderecos = new HashSet<>();
 	private Set<Perfil> perfils = new HashSet<>();
+
+	public PessoaDto() {
+		super();
+	}
+
+	public PessoaDto(Long id, String nome, String email, LocalDate dataNascimento, Boolean situacao,
+			Set<Endereco> enderecos, Set<Perfil> perfils) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.dataNascimento = dataNascimento;
+		this.situacao = situacao;
+		this.enderecos = enderecos;
+		this.perfils = perfils;
+	}
 
 	public Long getId() {
 		return id;
@@ -79,11 +96,18 @@ public class PessoaDto implements Serializable {
 		this.perfils = perfils;
 	}
 
-	public String getImagem() {
+	public Imagem getImagem() {
 		return imagem;
 	}
 
-	public void setImagem(String imagem) {
+	public void setImagem(Imagem imagem) {
 		this.imagem = imagem;
+	}
+	
+	@Override
+	public String toString() {
+		return "PessoaDto [id=" + id + ", nome=" + nome + ", email=" + email + ", dataNascimento=" + dataNascimento
+				+ ", situacao=" + situacao + ", enderecos=" + enderecos + ", perfils=" + perfils + ", imagem=" + imagem
+				+ "]";
 	}
 }
